@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function OrderForm(props) {
+function OrderForm({props}) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
 
@@ -32,8 +32,13 @@ function OrderForm(props) {
     return (
       <button
         key={ingredient}
+        type="button"
         name={ingredient}
-        // onClick={(e) => }
+        onClick={() => {
+          setIngredients((prevIngredients) =>
+            prevIngredients.includes(ingredient) ? prevIngredients.filter((item) => item !== ingredient) : [...prevIngredients, ingredient]
+          );
+        }}
       >
         {ingredient}
       </button>
@@ -47,7 +52,7 @@ function OrderForm(props) {
         placeholder="Name"
         name="name"
         value={name}
-        // onChange={(e) => }
+         onChange={(e) => setName(e.target.value) }
       />
 
       {ingredientButtons}

@@ -2,6 +2,11 @@ import React from "react";
 import "./Orders.css";
 
 const Orders = (props) => {
+  console.log(props, 'structure')
+  
+  if (!Array.isArray(props.orders)) {
+    return <div>No orders available.</div>;
+  }
   const orderEls = props.orders.map((order) => {
     return (
       <div className="order">
