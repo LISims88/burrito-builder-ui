@@ -10,7 +10,7 @@ function App() {
     const fetchOrders = async () => {
       try{
         const retrievedOrders = await getOrders();
-        setOrders(retrievedOrders)
+        setOrders(retrievedOrders.orders)
       }catch(error){
         console.error('Problem fetching order', error)
       }
