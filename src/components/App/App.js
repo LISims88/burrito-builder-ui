@@ -17,12 +17,14 @@ function App() {
     }
     fetchOrders()
   }, []);
-
+  const addOrder = (newOrder) =>{
+    setOrders((prevOrders)=>[...prevOrders, newOrder])
+  }
   return (
     <main className="App">
       <header>
         <h1>Burrito Builder</h1>
-        <OrderForm />
+        <OrderForm addOrder={addOrder}/>
       </header>
 
       <Orders orders={orders} />

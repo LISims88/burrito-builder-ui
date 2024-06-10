@@ -1,12 +1,39 @@
 import { useState } from "react";
 
-function OrderForm({props}) {
+function OrderForm({addOrder}) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    clearInputs();
+    if (name && ingredients.length) {
+      const newOrder = {
+        name,
+        ingredients,
+      };
+
+      try {
+        const response = await fetch("http://localhost:3001/api/v1/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newOrder),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const createdOrder = await response.json();
+        addOrder(createdOrder);
+        clearInputs();
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
+    } else {
+      console.log("Name and at least one ingredient are required");
+    }
   }
 
   function clearInputs() {
